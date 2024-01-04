@@ -17,26 +17,32 @@ interface Word {
     stroke: any
 }
 
-export function WordCard({cnchar, word, children}: { cnchar: ICnChar, word: Word, children?: React.ReactNode }) {
-    const drawRef = useRef(null);
-    const drawStrokeRef = useRef(null)
+function WordCard({word, children}: { word: Word, children?: React.ReactNode }) {
+    const drawRef = useRef<HTMLDivElement>(null)
+    const drawStrokeRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        console.log('update', word)
-        cnchar.draw(word.text, {
-            el: drawRef?.current,
-            type: cnchar.draw.TYPE.ANIMATION,
-            animation: {
-                loopAnimate: true
-            },
-            style: {
-                length: 180
-            }
-        });
-        cnchar.draw(word.text,{
-            el: drawStrokeRef?.current,
-            type: cnchar.draw.TYPE.STROKE
-        })
+        if (drawRef.current)
+        {
+            cnchar.draw(word.text, {
+                el: drawRef.current,
+                type: cnchar.draw.TYPE.ANIMATION,
+                animation: {
+                    loopAnimate: true
+                },
+                style: {
+                    length: 180
+                }
+            });
+        }
+
+        if (drawStrokeRef.current)
+        {
+            cnchar.draw(word.text,{
+                el: drawStrokeRef.current,
+                type: cnchar.draw.TYPE.STROKE
+            })
+        }
     }, [word])
 
     return (
@@ -90,7 +96,7 @@ export default function Word() {
                 <div className="mt-4 flex flex-col space-y-4 lg:flex-row lg:space-x-4 lg:space-y-0">
                     {
                         words.map((word: Word, index) => (
-                            <WordCard key={index} word={word} cnchar={cnchar}>
+                            <WordCard key={index} word={word}>
                             </WordCard>
                         ))
                     }

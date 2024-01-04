@@ -4,13 +4,7 @@ import Link from 'next/link'
 const navs: {href:string,text:string}[] = [
     {
         href:"word",text:"查找文字"
-    },
-    {
-        href:"test",text:"测试"
-    },
-    {
-        href:"test",text:"测试"
-    },
+    }
 ]
 
 function NavItem({href,children}: {href:string,children:React.ReactNode})
